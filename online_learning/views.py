@@ -1,12 +1,24 @@
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
+
 from online_learning.models import Course, Lesson
-from online_learning.serialiser import CourseSerialiser, LessonSerialiser
+from online_learning.serialiser import (CourseDetailseSerialiser,
+                                        CourseSerialiser, LessonSerialiser,
+                                        PaymentsSerialiser)
+from users.models import Payments
 
 
 class CourseSet(ModelViewSet):
     queryset = Course.objects.all()
-    serializer_class = CourseSerialiser
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return CourseDetailseSerialiser
+        return CourseSerialiser
 
 
 class LessonCreateApiView(CreateAPIView):
@@ -32,3 +44,12 @@ class LessonUdateApiView(UpdateAPIView):
 class LessonDestroyApiView(DestroyAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerialiser
+
+
+class PaymentsVievSet(ModelViewSet):
+    queryset = Payments.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ('data_pay',)
+    filterset_fields = ('course_pay', 'lesson_pay',)
+    search_fields = ('payment_method',)
+    serializer_class = PaymentsSerialiser

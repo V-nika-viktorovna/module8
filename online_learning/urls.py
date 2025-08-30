@@ -1,9 +1,10 @@
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 
-from online_learning.views import (CourseSet, LessonCreateApiView, LessonListApiView,
-                                   LessonRetrieveApiView, LessonUdateApiView, LessonDestroyApiView)
 from online_learning.apps import OnlineLearningConfig
+from online_learning.views import (CourseSet, LessonCreateApiView,
+                                   LessonDestroyApiView, LessonListApiView,
+                                   LessonRetrieveApiView, LessonUdateApiView)
 
 app_name = OnlineLearningConfig.name
 

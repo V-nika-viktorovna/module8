@@ -15,6 +15,8 @@ from pathlib import Path
 from django.conf.global_settings import AUTH_USER_MODEL
 from dotenv import load_dotenv
 
+load_dotenv(override=True)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,6 +47,8 @@ INSTALLED_APPS = [
 
     'online_learning',
     'users',
+
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +80,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
