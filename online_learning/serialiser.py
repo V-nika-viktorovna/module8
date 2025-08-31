@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from online_learning.models import Course, Lesson
+from online_learning.models import Course, Lesson, Payments
 
 
 class LessonSerialiser(ModelSerializer):
@@ -26,3 +26,9 @@ class CourseDetailseSerialiser(ModelSerializer):
     class Meta:
         model = Course
         fields = ("title",  "preview", "description", "count_lessons_course", "lessons_course")
+
+
+class PaymentsSerialiser(ModelSerializer):
+    class Meta:
+        model = Payments
+        fields = "__all__"
