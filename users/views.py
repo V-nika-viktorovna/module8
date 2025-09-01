@@ -1,5 +1,6 @@
-from rest_framework.generics import (CreateAPIView, ListAPIView,
-                                     RetrieveAPIView, UpdateAPIView)
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.permissions import AllowAny
 
 from users.models import User
@@ -17,16 +18,21 @@ class UserCreateAPIView(CreateAPIView):
         user.save()
 
 
-class LessonListApiView(ListAPIView):
+class UserListApiView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerialiser
 
 
-class LessonRetrieveApiView(RetrieveAPIView):
+class UserRetrieveApiView(RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerialiser
 
 
-class LessonUdateApiView(UpdateAPIView):
+class UserUdateApiView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerialiser
+
+
+class UserDestroyApiView(DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerialiser
