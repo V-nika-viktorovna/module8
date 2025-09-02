@@ -21,7 +21,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название урока', help_text='Название урока')
     course = models.ForeignKey(Course, on_delete=models.SET_NULL,
-                               verbose_name='Название урока', help_text='Название урока', null=True, blank=True)
+                               verbose_name='Название курса', help_text='Название курса', null=True, blank=True)
     preview = models.ImageField(null=True, blank=True, upload_to='online_learning/photo', verbose_name='Фото')
     description = models.TextField(null=True, blank=True, verbose_name='описание')
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
@@ -63,3 +63,17 @@ class Payments(models.Model):
             return f'оплата за {self.course_pay}'
         else:
             return f'оплата в размере {self.payment_amount}'
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             verbose_name='Подписчик', help_text='Подписчик'
+                             )
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс", help_text='Курс')
+
+    class Meta:
+        verbose_name = "Подписка на курс"
+        verbose_name_plural = "Подписки на курс"
+
+    def _str_(self):
+        return f"Пользователь:{self.user}, Подписки: {self.course}"
