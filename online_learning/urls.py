@@ -5,7 +5,8 @@ from online_learning.apps import OnlineLearningConfig
 from online_learning.views import (CourseSet, LessonCreateApiView,
                                    LessonDestroyApiView, LessonListApiView,
                                    LessonRetrieveApiView, LessonUdateApiView,
-                                   PaymentsVievSet, SubscriptionAPIView)
+                                   PaymentCreateAPIView, PaymentsVievSet,
+                                   SubscriptionAPIView)
 
 app_name = OnlineLearningConfig.name
 
@@ -19,4 +20,5 @@ urlpatterns = [
                 path("lesson/<int:pk>/delete/", LessonDestroyApiView.as_view(), name="lesson_delete"),
                 path("lesson/<int:pk>/update/", LessonUdateApiView.as_view(), name="lesson_update"),
                 path("subscription/", SubscriptionAPIView.as_view(), name="subscription"),
+                path("payment/create/", PaymentCreateAPIView.as_view(), name="payment_create"),
               ] + router.urls
