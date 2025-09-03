@@ -13,6 +13,9 @@ from online_learning.pagination import OnlineLearningPagination
 from online_learning.serialiser import (CourseDetailseSerialiser,
                                         CourseSerialiser, LessonSerialiser,
                                         PaymentsSerialiser)
+from online_learning.services import (create_stripe_price,
+                                      create_stripe_product,
+                                      create_stripe_session)
 from users.permissions import Moder, Owner
 
 
@@ -114,3 +117,17 @@ class SubscriptionAPIView(APIView):
             Subscription.objects.create(user=user, course=course_item)
             message = "подписка добавлена"
         return Response({"message": message})
+
+
+class PaymentCreateAPIView(CreateAPIView):
+    serializer_class = PaymentsSerialiser
+    queryset = Payments.objects.all()
+
+    def perform_create(self, serializer):
+        payment = serializer.save(user=self.request.user)
+        product = create_stripe_product(payment)
+        price = create_stripe_price(payment, product)
+        session_id, payment_link = create_stripe_session(price)
+        payment.session_id = session_id
+        payment.payment_link = payment_link
+        payment.save()
