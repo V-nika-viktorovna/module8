@@ -16,8 +16,8 @@ from online_learning.serialiser import (CourseDetailseSerialiser,
 from online_learning.services import (create_stripe_price,
                                       create_stripe_product,
                                       create_stripe_session)
-from users.permissions import Moder, Owner
 from online_learning.tasks import sending_emails_about_updata
+from users.permissions import Moder, Owner
 
 
 class CourseSet(ModelViewSet):
@@ -140,5 +140,5 @@ class PaymentCreateAPIView(CreateAPIView):
         price = create_stripe_price(payment, product)
         session_id, payment_link = create_stripe_session(price)
         payment.session_id = session_id
-        payment.payment_link= payment_link
+        payment.payment_link = payment_link
         payment.save()
