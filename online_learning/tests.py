@@ -36,10 +36,10 @@ class LessonTestCase(APITestCase):
 
     def test_lesson_update(self):
         url = reverse("online_learning:lesson_update", args=(self.lesson.pk,))
-        data = {"title": "Updated_Test"}
+        data = {"title": "Updated_Test", "description": "Test"}
         response = self.client.put(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Lesson.objects.get(pk=self.lesson.pk).name_ln, "Updated_Test")
+        self.assertEqual(Lesson.objects.get(pk=self.lesson.pk).title, "Updated_Test")
 
     def test_lesson_delete(self):
         url = reverse("online_learning:lesson_delete", args=(self.lesson.pk,))
