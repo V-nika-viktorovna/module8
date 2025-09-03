@@ -32,7 +32,7 @@ class CourseDetailseSerialiser(ModelSerializer):
     def get_count_lessons_course(self, course):
         return Lesson.objects.filter(course=course).count()
 
-    def get_is_subscription(self, course):
+    def get_subscription(self, course):
         return Subscription.objects.filter(course=course, user=self.context["request"].user).exists()
 
     class Meta:
