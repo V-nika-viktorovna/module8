@@ -188,7 +188,7 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 CELERY_BEAT_SCHEDULE = {
     'task-name': {
-        'task': 'myapp.tasks.my_task',  # Путь к задаче
+        'task': 'users.tasks.block_user',  # Путь к задаче
         'schedule': timedelta(days=30),
     },
 }
