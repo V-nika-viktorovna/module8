@@ -129,5 +129,5 @@ class PaymentCreateAPIView(CreateAPIView):
         price = create_stripe_price(payment, product)
         session_id, payment_link = create_stripe_session(price)
         payment.session_id = session_id
-        payment.link = payment_link
+        payment.payment_link = payment_link
         payment.save()
