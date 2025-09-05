@@ -7,5 +7,5 @@ def sending_emails_about_updata(email):
     """Асинхронную рассылку писем пользователям об обновлении материалов курса."""
 
     send_mail('Обновление курса', 'Курс из ваших подписок обновлен',
-              EMAIL_HOST_USER, [email])
+              EMAIL_HOST_USER, recipient_list=email)
 
