@@ -17,6 +17,7 @@ from online_learning.services import (create_stripe_price,
                                       create_stripe_product,
                                       create_stripe_session)
 from users.permissions import Moder, Owner
+from online_learning.tasks import sending_emails_about_updata
 
 
 class CourseSet(ModelViewSet):
@@ -32,6 +33,16 @@ class CourseSet(ModelViewSet):
         course = serializer.save()
         course.owner = self.request.user
         course.save()
+
+    def perform_update(self, serializer):
+        course_up = serializer.save()
+        course = get_object_or_404(Course, pk=course_up.id)
+        subscription_users = Subscription.objects.filter(course=course.pk)
+        email_list = []
+        for user in subscription_users:
+            email_list.append(user.email)
+        if email_list:
+            sending_emails_about_updata.delay(email_list)
 
     def get_permissions(self):
         if self.action == 'create':
@@ -129,5 +140,5 @@ class PaymentCreateAPIView(CreateAPIView):
         price = create_stripe_price(payment, product)
         session_id, payment_link = create_stripe_session(price)
         payment.session_id = session_id
-        payment.payment_link = payment_link
+        payment.payment_link= payment_link
         payment.save()

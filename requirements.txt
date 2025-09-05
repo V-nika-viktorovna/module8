@@ -9,3 +9,6 @@ pillow==11.3.0
 django-filter==25.1
 stripe==12.5.0
 drf-yasg==1.21.10
+celery==5.5.3
+redis==6.4.0
+django-celery-beat==2.8.1
