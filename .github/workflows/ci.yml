@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   test:
-    runs-on: latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out code
@@ -25,7 +25,7 @@ jobs:
 
   build:
     needs: test
-    runs-on: latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out code
@@ -42,7 +42,7 @@ jobs:
 
   deploy:
     needs: test
-    runs-on: latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Set in SSH
