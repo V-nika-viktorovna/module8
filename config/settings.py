@@ -202,18 +202,3 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(days=30),
     },
 }
-
-CACHES = {
-    'default': {
-        'BECKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://redis:6379/1',
-    }
-}
-
-if 'test' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'test_db.sqlite3',
-        }
-    }
