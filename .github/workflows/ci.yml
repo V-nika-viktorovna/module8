@@ -22,6 +22,8 @@ jobs:
 
       - name: Run test
         run: python manage.py test
+        env:
+          SECRET_KEY: test_secret_key
 
   build:
     needs: test
@@ -41,7 +43,7 @@ jobs:
         run: docker push -t ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
 
   deploy:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
